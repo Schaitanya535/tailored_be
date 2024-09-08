@@ -8,7 +8,7 @@ import (
 
 func SetupProductRoutes(router fiber.Router) {
 
-	product := router.Group("/product")
+	product := router.Group("/products")
 
 	product.Post("/", middlewares.Protected, productService.CreateProduct)
 
