@@ -1,6 +1,8 @@
 package userService
 
 import (
+	"strconv"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -16,7 +18,18 @@ func GetUsers(c *fiber.Ctx) error {
 
 func GetUser(c *fiber.Ctx) error {
 	id := c.Params("id")
-	return c.SendString("Get User " + id)
+	num, err := strconv.Atoi(id)
+
+	if err != nil {
+		return c.SendString("Invalid ID")
+	}
+
+	if num > len(mapUsers) {
+		return c.SendString("User not found")
+	}
+
+	user := mapUsers[num]
+	return c.SendString("Get User " + user)
 }
 
 func CreateUser(c *fiber.Ctx) error {
